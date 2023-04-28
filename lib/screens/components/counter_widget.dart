@@ -76,4 +76,9 @@ class CounterWidget extends StatelessWidget {
       },
     );
   }
+
+  // note : ---------- difference entre les deux methodes ----------
+
+  // En résumé, context.watch est une méthode légère et rapide pour observer les changements d'état du Bloc ou Cubit,
+  // tandis que BlocBuilder est utile lorsque vous avez besoin de reconstruire tout le widget en fonction de l'état du Bloc ou Cubit.
 }
