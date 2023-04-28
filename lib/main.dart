@@ -1,4 +1,4 @@
-import 'package:blocproject/counter_page.dart';
+import 'package:blocproject/screens/counter_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
