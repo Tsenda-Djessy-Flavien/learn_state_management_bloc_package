@@ -41,44 +41,82 @@ class CounterWidget extends StatelessWidget {
 
   //----------- 2e méthode ---------------
 
-  @override
-  Widget build(BuildContext context) {
-    // BlocBuilder : récupérer l'état du bloc et de réagir aux changements d'état
-    return BlocBuilder<CounterBloc, int>(
-      builder: (context, state) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Counter value : $state'),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    // context.read : pour récupérer l'instance du CounterBloc à partir du contexte
-                    onPressed: () =>
-                        context.read<CounterBloc>().add(CounterEvent.increment),
-                    child: const Icon(Icons.add),
-                  ),
-                  const SizedBox(width: 16),
-                  FloatingActionButton(
-                    // context.read : pour récupérer l'instance du CounterBloc à partir du contexte
-                    onPressed: () =>
-                        context.read<CounterBloc>().add(CounterEvent.decrement),
-                    child: const Icon(Icons.remove),
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   // BlocBuilder : récupérer l'état du bloc et de réagir aux changements d'état
+  //   return BlocBuilder<CounterBloc, int>(
+  //     builder: (context, state) {
+  //       return Center(
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             Text('Counter value : $state'),
+  //             const SizedBox(height: 16),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 FloatingActionButton(
+  //                   // context.read : pour récupérer l'instance du CounterBloc à partir du contexte
+  //                   onPressed: () =>
+  //                       context.read<CounterBloc>().add(CounterEvent.increment),
+  //                   child: const Icon(Icons.add),
+  //                 ),
+  //                 const SizedBox(width: 16),
+  //                 FloatingActionButton(
+  //                   // context.read : pour récupérer l'instance du CounterBloc à partir du contexte
+  //                   onPressed: () =>
+  //                       context.read<CounterBloc>().add(CounterEvent.decrement),
+  //                   child: const Icon(Icons.remove),
+  //                 ),
+  //               ],
+  //             )
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   // note : ---------- difference entre les deux methodes ----------
 
   // En résumé, context.watch est une méthode légère et rapide pour observer les changements d'état du Bloc ou Cubit,
   // tandis que BlocBuilder est utile lorsque vous avez besoin de reconstruire tout le widget en fonction de l'état du Bloc ou Cubit.
+
+  //----------- comment utliliser 'BlocListener' en se servant de la 1ère Méthode ---------------
+
+  @override
+  Widget build(BuildContext context) {
+    final counterBloc = context.watch<CounterBloc>();
+
+    return BlocListener<CounterBloc, int>(
+      listener: (context, state) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Counter value changed to $state')),
+        );
+      },
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Counter value : ${counterBloc.state}'),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  onPressed: () => counterBloc.add(CounterEvent.increment),
+                  child: const Icon(Icons.add),
+                ),
+                const SizedBox(width: 16),
+                FloatingActionButton(
+                  onPressed: () => counterBloc.add(CounterEvent.decrement),
+                  child: const Icon(Icons.remove),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
