@@ -89,6 +89,8 @@ class CounterWidget extends StatelessWidget {
     final counterBloc = context.watch<CounterBloc>();
 
     return BlocListener<CounterBloc, int>(
+      // spécifier le bloc qui écoutera le changement
+      bloc: counterBloc,
       listener: (context, state) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Counter value changed to $state')),

@@ -9,13 +9,11 @@ environment:
   sdk: '>=2.19.6 <3.0.0'
 
 dependencies:
+  bloc: ^8.1.1 # state management 
   flutter:
     sdk: flutter
-    
-
-
   cupertino_icons: ^1.0.2
-  flutter_bloc: ^8.1.2
+  flutter_bloc: ^8.1.2 # state management // flutter_bloc use bloc 
 
 dev_dependencies:
   flutter_test:
